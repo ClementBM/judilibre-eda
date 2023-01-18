@@ -1,0 +1,38 @@
+# https://python-poetry.org/docs/pyproject/
+[tool.poetry]
+name = "judilibre-eda"
+version = "0.1.0"
+description = "Judilibre EDA"
+authors = ["Clément Brutti-Mairesse <clement.brutti.mairesse@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/ClementBM/basic-python-repository-template"
+repository = "https://github.com/ClementBM/basic-python-repository-template"
+keywords = ["mykeyword", "mykeyword", "mykeyword"]
+include = [
+    "LICENSE",
+]
+# https://pypi.org/classifiers/
+classifiers = [
+    "Environment :: Console",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Quality Assurance",
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.dev-dependencies]
+pylint = "*"
+pytest = "*"
+mypy = "*"
+jupyter = "*"
+notebook = "*"
+ipykernel = "*"
+black = "*"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
