@@ -28,7 +28,6 @@ def get_summaries(results):
 
 
 def main():
-    # create an instance of the API class
     api_instance = judilibre_client.DefaultApi()
 
     try:
