@@ -1,19 +1,53 @@
-from judilibre_eda.corpus import CorpusReaderBase
 from nltk.book import Text
 from nltk.collocations import (
-    BigramCollocationFinder,
-    TrigramCollocationFinder,
-    QuadgramCollocationFinder,
     AbstractCollocationFinder,
+    BigramCollocationFinder,
+    QuadgramCollocationFinder,
+    TrigramCollocationFinder,
 )
 from nltk.metrics import (
     BigramAssocMeasures,
-    TrigramAssocMeasures,
     NgramAssocMeasures,
     QuadgramAssocMeasures,
+    TrigramAssocMeasures,
     ranks_from_scores,
     spearman_correlation,
 )
+from nltk.probability import FreqDist
+from scipy import stats
+
+import pandas as pd
+
+
+def detailed_collocation_2(
+    text: Text, vocab: FreqDist, num=20, window_size=2, stop_words=[]
+):
+    words = [word.lower() for word in text.tokens]
+
+    colloc_finder = BigramCollocationFinder.from_words(words, window_size=window_size)
+    colloc_finder.apply_freq_filter(min_freq=2)
+
+    colloc_finder.apply_word_filter(lambda w: len(w) < 3 or w.lower() in stop_words)
+
+    likelihood_scores = colloc_finder.score_ngrams(BigramAssocMeasures.likelihood_ratio)
+
+    collocation_strings = [
+        {
+            "w_1": colloc[0],
+            "w_1_count": vocab[colloc[0]],
+            "w_2": colloc[1],
+            "w_2_count": vocab[colloc[1]],
+            "score": score,
+            "p-value": chi2_p_value(score),
+        }
+        for colloc, score in likelihood_scores[:num]
+    ]
+
+    return pd.DataFrame(collocation_strings)
+
+
+def chi2_p_value(chi2_statistic):
+    return 1 - stats.chi2.cdf(chi2_statistic, 1)
 
 
 def collocation_2(text: Text, method="llr", num=20, window_size=2, stop_words=[]):
