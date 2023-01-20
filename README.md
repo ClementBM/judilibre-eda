@@ -1,12 +1,3 @@
-# Introduction
-Template repository for python package.
-
-After duplicating this repository, you may rename the default package name, which is `judilibre-eda`, with your package name wherever it is declared.
-So rename it in:
-* `pyproject.toml`
-* `tests.yaml`
-* `launch.json`
-
 # Development setup
 ## Prerequisites
 This following packages must be installed
@@ -29,26 +20,6 @@ git config --global user.email 'your email'
 * First setup `poetry install`
 * Then `poetry shell`
 
-# Build and publish with poetry
-## Build
-Manuel steps to generate and publish the package to TestPyPI with poetry, documentation from [packaging.python](https://python-poetry.org/docs/)
-
-Build the package, generate distribution archives
-```shell
-poetry build
-```
-
-## Publish to Test PyPI
-Add Test PyPI as an alternate package repository
-```shell
-poetry config repositories.testpypi https://test.pypi.org/legacy/
-```
-
-Upload/publish package/distribution archive to TestPyPI (a separate instance of the Python Package Index)
-```shell
-poetry publish -r testpypi
-```
-
 ## Installation with pip
 ```shell
 pip install --index-url https://test.pypi.org/simple/ judilibre-eda
@@ -58,6 +29,61 @@ or
 pip3 install --index-url https://test.pypi.org/simple/ judilibre-eda
 ```
 
-# Code of Conduct
+# JUDILIBRE API
 
-# History (changelog)
+La Cour de cassation, dans le cadre de la refonte de son site Web, a initié le projet JUDILIBRE visant à la conception et au développement en interne d'un moteur de recherche dans le corpus jurisprudentiel, mettant celui-ci à disposition du public dans l'esprit du décret sur l'Open Data des décisions de justice.
+
+OpenAPI spec version: 1.0.3
+
+## Requirements
+
+Python 2.7 and 3.4+
+
+## Getting Started
+
+```python
+from __future__ import print_function
+import time
+import judilibre_client
+from judilibre_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = judilibre_client.DefaultApi(judilibre_client.ApiClient(configuration))
+id = NULL # object | Identifiant de la décision à récupérer.
+resolve_references = NULL # object | Lorsque ce paramètre vaut `true`, le résultat de la requête contiendra, pour chaque information retournée par défaut sous forme de clé, l'intitulé complet de celle-ci (vaut `false` par défaut). (optional)
+query = NULL # object | Chaîne de caractères correspondant à la recherche. Ce paramètre est utilisé pour surligner en retour, dans le texte intégral de la décision, les termes correspondant avec la recherche initiale (ces termes étant délimitées par des balises `<em>`). (optional)
+operator = NULL # object | Opérateur logique reliant les multiples termes que le paramètre `query` peut contenir (`or` par défaut, `and` ou `exact` – dans ce dernier cas le moteur recherchera exactement le contenu du paramètre `query`). (optional)
+
+try:
+    # Permet de récupérer le contenu intégral d'une décision.
+    api_instance.decision(id, resolve_references=resolve_references, query=query, operator=operator)
+except ApiException as e:
+    print("Exception when calling DefaultApi->decision: %s\n" % e)
+
+```
+
+## Documentation for API Endpoints
+
+All URIs are relative to *https://localhost*
+
+Class | Method | HTTP request | Description
+------------ | ------------- | ------------- | -------------
+*DefaultApi* | [**decision**](docs/DefaultApi.md#decision) | **GET** /decision | Permet de récupérer le contenu intégral d&#39;une décision.
+*DefaultApi* | [**export**](docs/DefaultApi.md#export) | **GET** /export | Permet d&#39;effectuer un export par lot de décisions de justice.
+*DefaultApi* | [**healthcheck**](docs/DefaultApi.md#healthcheck) | **GET** /healthcheck | Permet de récupérer l&#39;état de disponibilité du service.
+*DefaultApi* | [**search**](docs/DefaultApi.md#search) | **GET** /search | Permet d&#39;effectuer une recherche dans les données ouvertes des décisions de justice.
+*DefaultApi* | [**stats**](docs/DefaultApi.md#stats) | **GET** /stats | Permet de récupérer des statistiques sur le contenu de la base JUDILIBRE.
+*DefaultApi* | [**taxonomy**](docs/DefaultApi.md#taxonomy) | **GET** /taxonomy | Permet de récupérer les listes des termes employés par le processus de recherche.
+
+
+## Documentation For Authorization
+
+Add `.env` file in the root directory:
+
+```shell
+JUDILIBRE_API_KEY=XXX
+```
+
+## Author
+sebastien.courvoisier@justice.fr
