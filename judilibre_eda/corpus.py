@@ -7,23 +7,10 @@ from nltk.corpus.reader.api import CorpusReader
 from nltk.corpus.reader.util import StreamBackedCorpusView, ZipFilePathPointer, concat
 
 from judilibre_eda.tokenizers import JudilibreTokenizer
+from dstb.language.corpus import CorpusReaderBase
 
 ROOT = Path(__file__)
 JUDILIBRE_JSONL = "dataset.jsonl"
-
-
-class CorpusReaderBase(CorpusReader):
-    @abstractmethod
-    def texts(self):
-        pass
-
-    @abstractmethod
-    def sentences(self):
-        pass
-
-    @abstractmethod
-    def words(self):
-        pass
 
 
 class JudilibreCorpusReader(CorpusReaderBase):
