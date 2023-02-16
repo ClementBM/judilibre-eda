@@ -6,8 +6,8 @@ description = "Judilibre EDA"
 authors = ["Clément Brutti-Mairesse <clement.brutti.mairesse@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-homepage = "https://github.com/ClementBM/basic-python-repository-template"
-repository = "https://github.com/ClementBM/basic-python-repository-template"
+homepage = "https://github.com/ClementBM/judilibre-eda"
+repository = "https://github.com/ClementBM/judilibre-eda"
 keywords = ["mykeyword", "mykeyword", "mykeyword"]
 include = [
     "LICENSE",
@@ -16,7 +16,6 @@ packages = [
     { include = "judilibre_client" },
     { include = "judilibre_eda" },
 ]
-
 
 # https://pypi.org/classifiers/
 classifiers = [
